@@ -3,10 +3,10 @@ import { VehicleService } from './vehicles.service';
 
 @Controller('vehicle')
 export class VehicleController {
-    constructor(private vehicleService: VehicleService) {}
+  constructor(private vehicleService: VehicleService) {}
 
-    @Get('/')
-    getVehicle() {
-        return this.vehicleService.getVehicles();
-    }
+  @Get('/')
+  getVehicle() {
+    return this.vehicleService.getVehicles();
+  }
 }

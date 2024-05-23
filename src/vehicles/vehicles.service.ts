@@ -19,24 +19,25 @@ export class VehicleService {
   }
 
   generateRandomVehicleData(): any {
-    let randomIndex = Math.floor(Math.random() * this.vehicles.length);
+    const randomIndex = Math.floor(Math.random() * this.vehicles.length);
     // generate a random latitude, longitude and speed
     // lat between -20.24571953578169 and -20.265185577202995
     // long between -40.27327454373077 and -40.25906248156139
     // speed between 0 and 100
-    const rndLat = (this.vehicles[randomIndex].lat =
+    const vehicle = this.vehicles[randomIndex];
+
+    vehicle.lat =
       -20.24571953578169 +
-      Math.random() * (-20.265185577202995 + 20.24571953578169));
-    const rndLng =
+      Math.random() * (-20.265185577202995 + 20.24571953578169);
+
+    vehicle.lng =
       -40.27327454373077 +
       Math.random() * (-40.25906248156139 + 40.27327454373077);
-    const rndSpeed = Math.floor(Math.random() * 100);
 
-    return {
-      id: this.vehicles[randomIndex].id,
-      lat: rndLat,
-      lng: rndLng,
-      speed: rndSpeed,
-    };
+    vehicle.speed = Math.floor(Math.random() * 100);
+
+    vehicle.status = 'moving';
+
+    return vehicle;
   }
 }

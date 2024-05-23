@@ -1,33 +1,27 @@
 import {
-  MessageBody,
-  SubscribeMessage,
+  OnGatewayDisconnect,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Server } from 'socket.io';
 import { VehicleService } from './vehicles.service';
+import { OnGatewayConnection } from '@nestjs/websockets';
 
 @WebSocketGateway({
-  namespace: 'ws',
+  namespace: 'vehicles/ws',
   cors: {
     origin: '*',
   },
 })
-export class VehiclesGateway {
+export class VehiclesGateway
+  implements OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer()
   server: Server;
 
   constructor(private vehicleService: VehicleService) {}
 
-  @SubscribeMessage('vehicles')
-  findAll(): Observable<any> {
-    return of(this.vehicleService.getVehicles());
-  }
-
-  handleConnection(client: any, ...args: any[]) {
+  handleConnection(client: any) {
     console.log(`Client connected: ${client.id}`);
     client.interval = setInterval(() => {
       this.server.emit('vehicle-position-update', {
