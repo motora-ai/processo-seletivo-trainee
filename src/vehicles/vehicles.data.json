@@ -1,0 +1,42 @@
+[
+    {
+      "id": 1,
+      "type": "car",
+      "lat": 51.5049375,
+      "lng": -0.0964509,
+      "speed": 0,
+      "status": "stopped"
+    },
+    {
+      "id": 2,
+      "type": "bus",
+      "lat": 51.5049375,
+      "lng": -0.0964509,
+      "speed": 0,
+      "status": "stopped"
+    },
+    {
+      "id": 3,
+      "type": "car",
+      "lat": 51.5049375,
+      "lng": -0.0964509,
+      "speed": 0,
+      "status": "stopped"
+    },
+    {
+      "id": 4,
+      "type": "truck",
+      "lat": 51.5049375,
+      "lng": -0.0964509,
+      "speed": 0,
+      "status": "stopped"
+    },
+    {
+      "id": 5,
+      "type": "car",
+      "lat": 51.5049375,
+      "lng": -0.0964509,
+      "speed": 0,
+      "status": "stopped"
+    }
+]
