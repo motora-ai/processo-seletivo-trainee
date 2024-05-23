@@ -20,7 +20,7 @@ Para executar o servidor, use o comando `npm run start`.
 
 Para receber informações iniciais dos veículos faça um requisição `GET` no endereço `http://localhost:3000/vehicles`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
 
-```json
+```
 [
   {
     "id": number,
@@ -37,7 +37,7 @@ Para receber informações iniciais dos veículos faça um requisição `GET` no
 
 O websocket é atualizado com informações em tempo real de cada veículo. Para realizar a conexão utilize a biblioteca [Socket.IO](https://socket.io/docs/v4/client-api/) e utilize o endereço `http://localhost:3000/vehicles/ws`. As mensagens enviadas possuem o seguinte formato:
 
-```json
+```
 {
   "data": {
     "id": number,
