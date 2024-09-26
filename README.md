@@ -124,7 +124,7 @@ Em todos os casos, se o veículo não for encontrado, o servidor deverá retorna
 
 O websocket é atualizado com informações em tempo real de cada veículo. Para realizar a conexão utilize a biblioteca [Socket.IO](https://socket.io/docs/v4/client-api/) e utilize o endereço `http://localhost:3000/vehicles/ws`. As mensagens enviadas possuem o seguinte formato:
 
-```
+```json
 {
   "data": {
     "id": number,
