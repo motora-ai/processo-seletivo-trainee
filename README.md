@@ -16,21 +16,108 @@ Para executar o servidor, use o comando `npm run start`.
 
 ## Recursos
 
-### Rota de Informações de Veículos
+### Rota de Informações de Veículos (GET)
 
 Para receber informações iniciais dos veículos faça um requisição `GET` no endereço `http://localhost:3000/vehicles`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
 
-```
+```json
 [
   {
     "id": number,
     "type": string,
+    "placa": string,
     "lat": number,
     "lng": number,
     "speed": number,
     "status": string // "stopped" ou "moving"
   },
+  ...
 ]
+```
+
+### Rota de Obtenção de Veículo Específico (GET)
+
+Para obter informações de um veículo específico, faça uma requisição GET no endereço http://localhost:3000/vehicles/{id}. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+  {
+    "id": number,
+    "type": string,
+    "placa": string,
+    "lat": number,
+    "lng": number,
+    "speed": number,
+    "status": string // "stopped" ou "moving"
+  }
+```
+
+### Rota de Criação de Veículo (POST)
+
+Para criar um novo veículo, faça uma requisição POST no endereço http://localhost:3000/vehicles com o seguinte JSON no corpo da requisição, contendo os dados do veículo a ser salvo:
+
+```json
+  {
+    "type": string,
+    "placa": string,
+  }
+```
+
+O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no corpo da resposta, contendo as informações do novo veículo criado:
+
+```json
+  {
+    "id": number,
+    "type": string,
+    "placa": string,
+    "lat": number,
+    "lng": number,
+    "speed": number,
+    "status": string // "stopped" ou "moving"
+  }
+```
+
+### Rota de Atualização de Veículo (PUT)
+
+Para atualizar as informações de um veículo existente, faça uma requisição PUT no endereço http://localhost:3000/vehicles/{id} com o seguinte JSON no corpo da requisição, contendo os dados a serem modificados:
+
+```json
+  {
+    "type": string,
+    "placa": string,
+    "lat": number,
+    "lng": number,
+    "speed": number,
+    "status": string // "stopped" ou "moving"
+  }
+```
+
+O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta, com os dados do veículo atualizado:
+
+```json
+  {
+    "type": string,
+    "placa": string,
+    "lat": number,
+    "lng": number,
+    "speed": number,
+    "status": string // "stopped" ou "moving"
+  }
+```
+
+### Rota de Exclusão de Veículo (DELETE)
+
+Para excluir um veículo, faça uma requisição DELETE no endereço http://localhost:3000/vehicles/{id}. O servidor deverá retornar uma resposta com status 204 (sem conteúdo), indicando que a operação foi realizada com sucesso.
+
+### Veículo Não Encontrado
+
+Em todos os casos, se o veículo não for encontrado, o servidor deverá retornar uma resposta com status 404 e o seguinte JSON no corpo da resposta:
+
+```json
+{
+  "message": "Vehicle not found",
+  "error": "Not Found",
+  "statusCode": 404
+}
 ```
 
 ### Websocket
