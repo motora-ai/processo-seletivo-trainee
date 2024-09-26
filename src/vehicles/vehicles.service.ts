@@ -4,6 +4,7 @@ import { join } from 'path';
 
 @Injectable()
 export class VehicleService {
+  private lastUsedId: number = 5;
   private readonly vehicles: any[];
   constructor() {
     this.vehicles = JSON.parse(
@@ -16,6 +17,57 @@ export class VehicleService {
 
   getVehicles(): any[] {
     return this.vehicles;
+  }
+
+  getById(id: number): any {
+    return this.vehicles.find((v) => v.id == id);
+  }
+
+  postVehicle(vehicle: any): any {
+    vehicle.id = ++this.lastUsedId;
+    vehicle.status = 'stopped';
+    vehicle.lat = 51.5049375;
+    vehicle.lng = -0.0964509;
+    this.vehicles.push(vehicle);
+    return vehicle;
+  }
+
+  putVehicle(vehicle: any, id: number): any {
+    const index = this.vehicles.findIndex((v) => v.id == id);
+
+    if (index === -1) {
+      return null;
+    }
+
+    vehicle.id = id;
+    vehicle.status = vehicle.status || 'stopped';
+    vehicle.lat = vehicle.lat || 51.5049375;
+    vehicle.lng = vehicle.lng || -0.0964509;
+
+    this.vehicles[index] = vehicle;
+    return vehicle;
+  }
+
+  deleteVehicle(vehicleId: number): any {
+    const index = this.vehicles.findIndex((v) => v.id == vehicleId);
+
+    if (index === -1) {
+      return null;
+    }
+    const vehicle = this.vehicles[index];
+    this.vehicles.splice(index, 1);
+    return vehicle;
+  }
+
+  patchVehicle(vehicleId: number, vehicle: any): any {
+    const index = this.vehicles.findIndex((v) => v.id == vehicleId);
+    if (index === -1) {
+      return null;
+    }
+    const updatedVehicle = { ...this.vehicles[index], ...vehicle };
+    updatedVehicle.id = vehicleId;
+    this.vehicles[index] = updatedVehicle;
+    return updatedVehicle;
   }
 
   generateRandomVehicleData(): any {

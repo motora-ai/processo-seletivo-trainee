@@ -5,7 +5,8 @@
       "lat": 51.5049375,
       "lng": -0.0964509,
       "speed": 0,
-      "status": "stopped"
+      "status": "stopped",
+      "placa": "MTJ0885"
     },
     {
       "id": 2,
@@ -13,7 +14,8 @@
       "lat": 51.5049375,
       "lng": -0.0964509,
       "speed": 0,
-      "status": "stopped"
+      "status": "stopped",
+      "placa": "MQJ1477"
     },
     {
       "id": 3,
@@ -21,7 +23,8 @@
       "lat": 51.5049375,
       "lng": -0.0964509,
       "speed": 0,
-      "status": "stopped"
+      "status": "stopped",
+      "placa": "MPH9692"
     },
     {
       "id": 4,
@@ -29,7 +32,8 @@
       "lat": 51.5049375,
       "lng": -0.0964509,
       "speed": 0,
-      "status": "stopped"
+      "status": "stopped",
+      "placa": "MPX3917"
     },
     {
       "id": 5,
@@ -37,6 +41,7 @@
       "lat": 51.5049375,
       "lng": -0.0964509,
       "speed": 0,
-      "status": "stopped"
+      "status": "stopped",
+      "placa": "MSU7768"
     }
 ]
