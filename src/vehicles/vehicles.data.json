@@ -1,47 +1,47 @@
 [
-    {
-      "id": 1,
-      "type": "car",
-      "lat": 51.5049375,
-      "lng": -0.0964509,
-      "speed": 0,
-      "status": "stopped",
-      "placa": "MTJ0885"
-    },
-    {
-      "id": 2,
-      "type": "bus",
-      "lat": 51.5049375,
-      "lng": -0.0964509,
-      "speed": 0,
-      "status": "stopped",
-      "placa": "MQJ1477"
-    },
-    {
-      "id": 3,
-      "type": "car",
-      "lat": 51.5049375,
-      "lng": -0.0964509,
-      "speed": 0,
-      "status": "stopped",
-      "placa": "MPH9692"
-    },
-    {
-      "id": 4,
-      "type": "truck",
-      "lat": 51.5049375,
-      "lng": -0.0964509,
-      "speed": 0,
-      "status": "stopped",
-      "placa": "MPX3917"
-    },
-    {
-      "id": 5,
-      "type": "car",
-      "lat": 51.5049375,
-      "lng": -0.0964509,
-      "speed": 0,
-      "status": "stopped",
-      "placa": "MSU7768"
-    }
+  {
+    "id": 1,
+    "type": "car",
+    "lat": 51.5049375,
+    "lng": -0.0964509,
+    "speed": 0,
+    "status": "stopped",
+    "placa": "MTJ0885"
+  },
+  {
+    "id": 2,
+    "type": "bus",
+    "lat": 51.5049375,
+    "lng": -0.0964509,
+    "speed": 0,
+    "status": "moving",
+    "placa": "MQJ1477"
+  },
+  {
+    "id": 3,
+    "type": "car",
+    "lat": 51.5049375,
+    "lng": -0.0964509,
+    "speed": 0,
+    "status": "stopped",
+    "placa": "MPH9692"
+  },
+  {
+    "id": 4,
+    "type": "truck",
+    "lat": 51.5049375,
+    "lng": -0.0964509,
+    "speed": 0,
+    "status": "stopped",
+    "placa": "MPX3917"
+  },
+  {
+    "id": 5,
+    "type": "car",
+    "lat": 51.5049375,
+    "lng": -0.0964509,
+    "speed": 0,
+    "status": "stopped",
+    "placa": "MSU7768"
+  }
 ]
