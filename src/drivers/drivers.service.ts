@@ -75,4 +75,9 @@ export class DriversService {
     this.drivers[index] = updatedDriver;
     return updatedDriver;
   }
+
+  getDriversByStatus(status: string): any[] {
+    return this.drivers.filter((driver) => driver.status == status);
+  }
+
 }

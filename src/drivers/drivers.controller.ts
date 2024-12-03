@@ -68,4 +68,9 @@ export class DriversController {
 
     return response;
   }
+
+  @Get('/driversByStatus/:status')
+  getDriversByStatus(@Param('status') status: string) {
+    return this.driversService.getDriversByStatus(status);
+  }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { DriversService } from 'src/drivers/drivers.service';
@@ -33,6 +33,7 @@ export class TravelsService {
     travel.driverId = travel.driverId || -1;
     travel.vehicleId = travel.vehicleId || -1;
     travel.start = travel.start || new Date();
+    travel.status = travel.status || travel.end ? 'finished' : 'ongoing';
     travel.end = travel.end || undefined;
     this.travels.push(travel);
     return travel;
@@ -49,6 +50,7 @@ export class TravelsService {
     travel.driverId = travel.driverId || -1;
     travel.vehicleId = travel.vehicleId || -1;
     travel.start = travel.start || new Date();
+    travel.status = travel.status || travel.end ? 'finished' : 'ongoing';
     travel.end = travel.end || undefined;
 
     this.travels[index] = travel;
@@ -78,27 +80,55 @@ export class TravelsService {
   }
 
   generateRandomTravel(): any {
-    const driversList = this.driversService.getDrivers();
-
+    const driversList = this.driversService.getDrivers().filter(driver => driver.status === 'idle');
     const randomDriver =
       driversList[Math.floor(Math.random() * driversList.length)];
 
-    const vehiclesList = this.vehiclesService.getVehicles();
+    if (!randomDriver) {
+      throw new BadRequestException('No driver available to drive in the Travel');
+    }
 
+    const vehiclesList = this.vehiclesService.getVehicles().filter(vehicle => vehicle.status === 'stopped');
     const randomVehicle =
       vehiclesList[Math.floor(Math.random() * vehiclesList.length)];
 
-    this.vehiclesService.patchVehicle(randomVehicle.id, { status: 'moving' });
+    if (!randomVehicle) {
+      throw new BadRequestException('No vehicle available to begin the Travel');
+    }
 
-    this.driversService.patchDriver(randomDriver.id, { status: 'driving' });
-
-    const newTravel = this.postTravel({
+    const newTravel = this.beginTravel({
       vehicleId: randomVehicle.id,
       driverId: randomDriver.id,
-      start: new Date(),
-    });
+    })
 
     return newTravel;
+  }
+
+  beginTravel({ vehicleId, driverId, start }: any): any {
+
+    const vehicle = this.vehiclesService.getById(vehicleId);
+
+    if (vehicle.status === 'moving') {
+      throw new BadRequestException('Vehicle already traveling');
+    }
+
+    const driver = this.driversService.getById(driverId);
+
+    if (driver.status === 'driving') {
+      throw new BadRequestException('Driver already traveling');
+    }
+
+    const travel = this.postTravel({
+      vehicleId,
+      driverId,
+      start
+    });
+
+    this.vehiclesService.patchVehicle(vehicleId, { status: 'moving' })
+
+    this.driversService.patchDriver(driverId, { status: 'driving' })
+
+    return travel;
   }
 
   stopTravel(travelId: number): any {
@@ -109,16 +139,16 @@ export class TravelsService {
     }
 
     travel.end = new Date();
+    travel.status = 'finished';
+    const finishedTravel = this.putTravel(travel, travelId);
 
     const vehicle = this.vehiclesService.getById(travel.vehicleId);
-
     this.vehiclesService.patchVehicle(vehicle.id, { status: 'stopped' });
 
     const driver = this.driversService.getById(travel.driverId);
-
     this.driversService.patchDriver(driver.id, { status: 'idle' });
 
-    return travel;
+    return finishedTravel;
   }
 
   getTravelsByDriver(driverId: number): any[] {

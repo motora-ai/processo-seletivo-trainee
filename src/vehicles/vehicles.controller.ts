@@ -13,7 +13,7 @@ import { VehicleService } from './vehicles.service';
 
 @Controller('vehicles')
 export class VehicleController {
-  constructor(private vehicleService: VehicleService) {}
+  constructor(private vehicleService: VehicleService) { }
 
   @Get('/')
   getVehicle() {
@@ -34,6 +34,11 @@ export class VehicleController {
   @Post('/')
   postVehicle(@Body() vehicle: any) {
     return this.vehicleService.postVehicle(vehicle);
+  }
+
+  @Post('/moveVehicle/:id')
+  moveVehicle(@Param('id') vehicleId: string) {
+    return this.vehicleService.moveVehicle(parseInt(vehicleId));
   }
 
   @Put(':id')
@@ -71,4 +76,10 @@ export class VehicleController {
 
     return response;
   }
+
+  @Get('/vehiclesByStatus/:status')
+  getVehiclesByStatus(@Param('status') status: string): any[] {
+    return this.vehicleService.getVehiclesByStatus(status);
+  }
+
 }

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -13,7 +14,7 @@ import { TravelsService } from './travels.service';
 
 @Controller('travels')
 export class TravelsController {
-  constructor(private travelsService: TravelsService) {}
+  constructor(private travelsService: TravelsService) { }
 
   @Get('/')
   getTravel() {
@@ -65,6 +66,56 @@ export class TravelsController {
     if (!response) {
       throw new NotFoundException('Travel not found');
     }
+
+    return response;
+  }
+
+  @Post('/beginTravel')
+  beginTravel(@Body() travel: any) {
+    const response = this.travelsService.beginTravel(travel);
+
+    if (!response) {
+      throw new BadRequestException('Some error happened');
+    }
+
+    return response;
+  }
+
+  @Post('/generateTravel')
+  generateRandomTravel() {
+    const response = this.travelsService.generateRandomTravel();
+
+    return response;
+  }
+
+  @Post('/stopTravel/:id')
+  stopTravel(@Param('id') travelId: string) {
+    const response = this.travelsService.stopTravel(parseInt(travelId));
+
+    if (!response) {
+      throw new NotFoundException('Travel not found');
+    }
+
+    return response;
+  }
+
+  @Get('/travelsByDriver/:id')
+  getTravelsByDriver(@Param('id') driverId: string) {
+    const response = this.travelsService.getTravelsByDriver(parseInt(driverId));
+
+    return response;
+  }
+
+  @Get('/travelsByVehicle/:id')
+  getTravelsByVehicle(@Param('id') vehicleId: string) {
+    const response = this.travelsService.getTravelsByVehicle(parseInt(vehicleId));
+
+    return response;
+  }
+
+  @Get('/travelsByStatus/:status')
+  getTravelsByStatus(@Param('status') travelStatus: string) {
+    const response = this.travelsService.getTravelsByStatus(travelStatus);
 
     return response;
   }

@@ -3,6 +3,7 @@
     "id": 1,
     "driverId": 1,
     "vehicleId": 1,
+    "status": "finished",
     "start": "2021-01-01T00:00:00.000Z",
     "end": "2021-01-01T00:00:00.000Z"
   },
@@ -10,12 +11,14 @@
     "id": 2,
     "driverId": 2,
     "vehicleId": 2,
+    "status": "ongoing",
     "start": "2021-01-01T03:00:00.000Z"
   },
   {
     "id": 3,
     "driverId": 3,
-    "vehicleId": 3,
+    "vehicleId": 2,
+    "status": "finished",
     "start": "2021-01-01T06:00:00.000Z",
     "end": "2021-01-01T09:00:00.000Z"
   }

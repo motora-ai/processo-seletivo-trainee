@@ -76,7 +76,13 @@ export class VehicleService {
     // lat between -20.24571953578169 and -20.265185577202995
     // long between -40.27327454373077 and -40.25906248156139
     // speed between 0 and 100
-    const vehicle = this.vehicles[randomIndex];
+    const vehicle = this.moveVehicle(randomIndex);
+
+    return vehicle;
+  }
+
+  moveVehicle(vehicleId: number): any {
+    const vehicle = this.getById(vehicleId);
 
     vehicle.lat =
       -20.24571953578169 +
@@ -90,6 +96,15 @@ export class VehicleService {
 
     vehicle.status = 'moving';
 
-    return vehicle;
+    const updatedVehicle = this.putVehicle(vehicle, vehicleId);
+
+    return updatedVehicle;
+
   }
+
+  getVehiclesByStatus(status: string): any[] {
+    console.log(this.vehicles.filter((vehicle) => vehicle.status == status))
+    return this.vehicles.filter((vehicle) => vehicle.status == status);
+  }
+
 }
