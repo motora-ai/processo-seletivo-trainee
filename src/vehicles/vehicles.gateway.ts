@@ -14,24 +14,42 @@ import { OnGatewayConnection } from '@nestjs/websockets';
   },
 })
 export class VehiclesGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+  implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  constructor(private vehicleService: VehicleService) {}
+  constructor(private vehicleService: VehicleService) { }
 
   handleConnection(client: any) {
     console.log(`Client connected: ${client.id}`);
-    client.interval = setInterval(() => {
-      this.server.emit('vehicle-position-update', {
-        data: this.vehicleService.generateRandomVehicleData(),
-      });
-    }, 1000);
+    // client.interval = setInterval(() => {
+    //   this.server.emit('vehicle-position-update', {
+    //     data: this.vehicleService.generateRandomVehicleData(),
+    //   });
+    // }, 1000);
   }
 
   handleDisconnect(client: any) {
     console.log(`Client disconnected: ${client.id}`);
-    clearInterval(client.interval);
+    // clearInterval(client.interval);
   }
+
+  sendCreated(vehicle: any) {
+    this.server.emit('vehicle-created', {
+      data: vehicle,
+    });
+  }
+
+  sendUpdated(vehicle: any) {
+    this.server.emit('vehicle-update', {
+      data: vehicle,
+    });
+  }
+
+  sendDeleted(vehicle: any) {
+    this.server.emit('vehicle-deleted', {
+      data: vehicle,
+    });
+  }
+
 }

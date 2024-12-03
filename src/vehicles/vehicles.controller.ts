@@ -10,10 +10,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { VehicleService } from './vehicles.service';
+import { VehiclesGateway } from './vehicles.gateway';
 
 @Controller('vehicles')
 export class VehicleController {
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService, private vehicleGateway: VehiclesGateway) { }
 
   @Get('/')
   getVehicle() {
@@ -33,12 +34,21 @@ export class VehicleController {
 
   @Post('/')
   postVehicle(@Body() vehicle: any) {
-    return this.vehicleService.postVehicle(vehicle);
+    const response = this.vehicleService.postVehicle(vehicle);
+
+    this.vehicleGateway.sendCreated(response);
+
+    return response;
+
   }
 
   @Post('/moveVehicle/:id')
   moveVehicle(@Param('id') vehicleId: string) {
-    return this.vehicleService.moveVehicle(parseInt(vehicleId));
+    const response = this.vehicleService.moveVehicle(parseInt(vehicleId));
+
+    this.vehicleGateway.sendUpdated(response);
+
+    return response;
   }
 
   @Put(':id')
@@ -52,6 +62,8 @@ export class VehicleController {
       throw new NotFoundException('Vehicle not found');
     }
 
+    this.vehicleGateway.sendUpdated(response);
+
     return response;
   }
 
@@ -62,6 +74,8 @@ export class VehicleController {
     if (!response) {
       throw new NotFoundException('Vehicle not found');
     }
+
+    this.vehicleGateway.sendDeleted(response);
 
     return response;
   }
@@ -74,12 +88,16 @@ export class VehicleController {
       throw new NotFoundException('Vehicle not found');
     }
 
+    this.vehicleGateway.sendUpdated(response);
+
     return response;
   }
 
   @Get('/vehiclesByStatus/:status')
   getVehiclesByStatus(@Param('status') status: string): any[] {
-    return this.vehicleService.getVehiclesByStatus(status);
+    const response = this.vehicleService.getVehiclesByStatus(status);
+
+    return response;
   }
 
 }
