@@ -6,7 +6,7 @@
     "lng": -0.0964509,
     "speed": 0,
     "status": "stopped",
-    "placa": "MTJ0885"
+    "plate": "MTJ0885"
   },
   {
     "id": 2,
@@ -15,7 +15,7 @@
     "lng": -0.0964509,
     "speed": 0,
     "status": "moving",
-    "placa": "MQJ1477"
+    "plate": "MQJ1477"
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "lng": -0.0964509,
     "speed": 0,
     "status": "stopped",
-    "placa": "MPH9692"
+    "plate": "MPH9692"
   },
   {
     "id": 4,
@@ -33,7 +33,7 @@
     "lng": -0.0964509,
     "speed": 0,
     "status": "stopped",
-    "placa": "MPX3917"
+    "plate": "MPX3917"
   },
   {
     "id": 5,
@@ -42,6 +42,6 @@
     "lng": -0.0964509,
     "speed": 0,
     "status": "stopped",
-    "placa": "MSU7768"
+    "plate": "MSU7768"
   }
 ]
