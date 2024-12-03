@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Analu Débora Beatriz Castro",
+    "cpf": "490.355.908-48",
+    "cnh": "92940195493",
+    "status": "idle"
+  },
+  {
+    "id": 2,
+    "name": "Nair Sebastiana dos Santos",
+    "cpf": "089.779.462-12",
+    "cnh": "93313133232",
+    "status": "idle"
+  },
+  {
+    "id": 3,
+    "name": "Kamilly Sophia Freitas",
+    "cpf": "740.897.307-91",
+    "cnh": "96543601640",
+    "status": "idle"
+  }
+]

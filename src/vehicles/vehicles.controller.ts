@@ -37,8 +37,11 @@ export class VehicleController {
   }
 
   @Put(':id')
-  putVehicle(@Param('id') vehicleId: number, @Body() vehicle: any) {
-    const response = this.vehicleService.putVehicle(vehicle, vehicleId);
+  putVehicle(@Param('id') vehicleId: string, @Body() vehicle: any) {
+    const response = this.vehicleService.putVehicle(
+      vehicle,
+      parseInt(vehicleId),
+    );
 
     if (!response) {
       throw new NotFoundException('Vehicle not found');
@@ -59,7 +62,7 @@ export class VehicleController {
   }
 
   @Patch(':id')
-  patchVehicle(@Param('id') vehicleId: number, @Body() vehicle: any) {
+  patchVehicle(@Param('id') vehicleId: string, @Body() vehicle: any) {
     const response = this.vehicleService.patchVehicle(vehicleId, vehicle);
 
     if (!response) {

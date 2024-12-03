@@ -1,0 +1,3 @@
+const startSimulation = async () => {};
+
+startSimulation();
