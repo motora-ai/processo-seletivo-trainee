@@ -15,8 +15,8 @@
     vehicleSocket.on('vehicle-created', function (data) {
       console.log('vehicle-created', data.data);
     })
-    vehicleSocket.on('vehicle-update', function (data) {
-      console.log('vehicle-update', data.data);
+    vehicleSocket.on('vehicle-updated', function (data) {
+      console.log('vehicle-updated', data.data);
     });
     vehicleSocket.on('vehicle-deleted', function (data) {
       console.log('vehicle-deleted', data.data);
@@ -38,8 +38,8 @@
     travelsSocket.on('travel-created', function (data) {
       console.log('travel-created', data.data);
     })
-    travelsSocket.on('travel-update', function (data) {
-      console.log('travel-update', data.data);
+    travelsSocket.on('travel-updated', function (data) {
+      console.log('travel-updated', data.data);
     });
     travelsSocket.on('travel-deleted', function (data) {
       console.log('travel-deleted', data.data);
@@ -48,6 +48,29 @@
       console.log('exception', data);
     });
     travelsSocket.on('disconnect', function () {
+      console.log('Disconnected');
+    });
+
+    const driversSocket = io('http://localhost:3000/drivers/ws');
+    driversSocket.on('connect', function () {
+      console.log('Connected');
+    });
+    driversSocket.on('events', function (data) {
+      console.log('event', data);
+    });
+    driversSocket.on('driver-created', function (data) {
+      console.log('driver-created', data.data);
+    })
+    driversSocket.on('driver-updated', function (data) {
+      console.log('driver-updated', data.data);
+    });
+    driversSocket.on('driver-deleted', function (data) {
+      console.log('driver-deleted', data.data);
+    });
+    driversSocket.on('exception', function (data) {
+      console.log('exception', data);
+    });
+    driversSocket.on('disconnect', function () {
       console.log('Disconnected');
     });
 

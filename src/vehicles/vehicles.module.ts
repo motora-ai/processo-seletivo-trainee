@@ -7,6 +7,6 @@ import { VehiclesGateway } from './vehicles.gateway';
   imports: [],
   controllers: [VehicleController],
   providers: [VehicleService, VehiclesGateway],
-  exports: [VehicleService],
+  exports: [VehicleService, VehiclesGateway],
 })
-export class VehiclesModule {}
+export class VehiclesModule { }

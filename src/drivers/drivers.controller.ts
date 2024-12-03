@@ -33,7 +33,9 @@ export class DriversController {
 
   @Post('/')
   postDriver(@Body() driver: any) {
-    return this.driversService.postDriver(driver);
+    const response = this.driversService.postDriver(driver);
+
+    return response;
   }
 
   @Put(':id')

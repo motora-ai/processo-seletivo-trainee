@@ -18,8 +18,6 @@ export class VehiclesGateway
   @WebSocketServer()
   server: Server;
 
-  constructor(private vehicleService: VehicleService) { }
-
   handleConnection(client: any) {
     console.log(`Client connected: ${client.id}`);
     // client.interval = setInterval(() => {
@@ -41,7 +39,7 @@ export class VehiclesGateway
   }
 
   sendUpdated(vehicle: any) {
-    this.server.emit('vehicle-update', {
+    this.server.emit('vehicle-updated', {
       data: vehicle,
     });
   }

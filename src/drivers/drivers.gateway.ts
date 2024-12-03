@@ -1,14 +1,13 @@
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server } from 'socket.io';
 
-
 @WebSocketGateway({
-    namespace: 'travels/ws',
+    namespace: 'drivers/ws',
     cors: {
         origin: '*',
-    },
+    }
 })
-export class TravelsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class DriversGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
     server: Server;
 
@@ -20,21 +19,21 @@ export class TravelsGateway implements OnGatewayConnection, OnGatewayDisconnect 
         console.log(`Client disconnected: ${client.id}`);
     }
 
-    sendCreated(travel: any) {
-        this.server.emit('travel-created', {
-            data: travel,
+    sendCreated(driver: any) {
+        this.server.emit('driver-created', {
+            data: driver,
         });
     }
 
-    sendDeleted(travel: any) {
-        this.server.emit('travel-deleted', {
-            data: travel,
+    sendDeleted(driver: any) {
+        this.server.emit('driver-deleted', {
+            data: driver,
         });
     }
 
-    sendUpdated(travel: any) {
-        this.server.emit('travel-updated', {
-            data: travel,
+    sendUpdated(driver: any) {
+        this.server.emit('driver-updated', {
+            data: driver,
         })
     }
 }

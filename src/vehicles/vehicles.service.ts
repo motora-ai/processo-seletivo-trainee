@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { VehiclesGateway } from './vehicles.gateway';
 
 @Injectable()
 export class VehicleService {
   private lastUsedId: number = 5;
   private readonly vehicles: any[];
-  constructor() {
+  constructor(private vehiclesGateway: VehiclesGateway) {
     this.vehicles = JSON.parse(
       readFileSync(
         join(process.cwd(), 'src/vehicles/vehicles.data.json'),
@@ -29,6 +30,8 @@ export class VehicleService {
     vehicle.lat = 51.5049375;
     vehicle.lng = -0.0964509;
     this.vehicles.push(vehicle);
+
+    this.vehiclesGateway.sendCreated(vehicle);
     return vehicle;
   }
 
@@ -45,6 +48,8 @@ export class VehicleService {
     vehicle.lng = vehicle.lng || -0.0964509;
 
     this.vehicles[index] = vehicle;
+
+    this.vehiclesGateway.sendUpdated(vehicle);
     return vehicle;
   }
 
@@ -56,6 +61,8 @@ export class VehicleService {
     }
     const vehicle = this.vehicles[index];
     this.vehicles.splice(index, 1);
+
+    this.vehiclesGateway.sendDeleted(vehicle);
     return vehicle;
   }
 
@@ -67,6 +74,8 @@ export class VehicleService {
     const updatedVehicle = { ...this.vehicles[index], ...vehicle };
     updatedVehicle.id = vehicleId;
     this.vehicles[index] = updatedVehicle;
+
+    this.vehiclesGateway.sendUpdated(updatedVehicle);
     return updatedVehicle;
   }
 
@@ -103,7 +112,6 @@ export class VehicleService {
   }
 
   getVehiclesByStatus(status: string): any[] {
-    console.log(this.vehicles.filter((vehicle) => vehicle.status == status))
     return this.vehicles.filter((vehicle) => vehicle.status == status);
   }
 

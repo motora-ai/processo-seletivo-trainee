@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { DriversService } from 'src/drivers/drivers.service';
 import { VehicleService } from 'src/vehicles/vehicles.service';
+import { TravelsGateway } from './travels.gateway';
 
 @Injectable()
 export class TravelsService {
@@ -11,6 +12,7 @@ export class TravelsService {
   constructor(
     private driversService: DriversService,
     private vehiclesService: VehicleService,
+    private travelsGateway: TravelsGateway,
   ) {
     this.travels = JSON.parse(
       readFileSync(
@@ -36,6 +38,8 @@ export class TravelsService {
     travel.status = travel.status || travel.end ? 'finished' : 'ongoing';
     travel.end = travel.end || undefined;
     this.travels.push(travel);
+
+    this.travelsGateway.sendCreated(travel);
     return travel;
   }
 
@@ -54,6 +58,8 @@ export class TravelsService {
     travel.end = travel.end || undefined;
 
     this.travels[index] = travel;
+
+    this.travelsGateway.sendUpdated(travel);
     return travel;
   }
 
@@ -65,6 +71,8 @@ export class TravelsService {
     }
     const travel = this.travels[index];
     this.travels.splice(index, 1);
+
+    this.travelsGateway.sendDeleted(travel);
     return travel;
   }
 
@@ -76,6 +84,8 @@ export class TravelsService {
     const updatedTravel = { ...this.travels[index], ...travel };
     updatedTravel.id = travelId;
     this.travels[index] = updatedTravel;
+
+    this.travelsGateway.sendUpdated(updatedTravel);
     return updatedTravel;
   }
 

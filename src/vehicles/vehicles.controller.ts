@@ -10,11 +10,10 @@ import {
   Put,
 } from '@nestjs/common';
 import { VehicleService } from './vehicles.service';
-import { VehiclesGateway } from './vehicles.gateway';
 
 @Controller('vehicles')
 export class VehicleController {
-  constructor(private vehicleService: VehicleService, private vehicleGateway: VehiclesGateway) { }
+  constructor(private vehicleService: VehicleService) { }
 
   @Get('/')
   getVehicle() {
@@ -36,8 +35,6 @@ export class VehicleController {
   postVehicle(@Body() vehicle: any) {
     const response = this.vehicleService.postVehicle(vehicle);
 
-    this.vehicleGateway.sendCreated(response);
-
     return response;
 
   }
@@ -45,8 +42,6 @@ export class VehicleController {
   @Post('/moveVehicle/:id')
   moveVehicle(@Param('id') vehicleId: string) {
     const response = this.vehicleService.moveVehicle(parseInt(vehicleId));
-
-    this.vehicleGateway.sendUpdated(response);
 
     return response;
   }
@@ -62,8 +57,6 @@ export class VehicleController {
       throw new NotFoundException('Vehicle not found');
     }
 
-    this.vehicleGateway.sendUpdated(response);
-
     return response;
   }
 
@@ -75,8 +68,6 @@ export class VehicleController {
       throw new NotFoundException('Vehicle not found');
     }
 
-    this.vehicleGateway.sendDeleted(response);
-
     return response;
   }
 
@@ -87,8 +78,6 @@ export class VehicleController {
     if (!response) {
       throw new NotFoundException('Vehicle not found');
     }
-
-    this.vehicleGateway.sendUpdated(response);
 
     return response;
   }
