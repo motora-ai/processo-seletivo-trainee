@@ -10,12 +10,12 @@ Um exemplo de cliente que se conecta aos WebSockets e recebe esses dados pode se
 
 Para começar a usar este projeto, clone o repositório e instale as dependências com o comando:
 
-```$ npm install```
+`$ npm install`
 
 ## Executando o servidor
 
-Para executar o servidor, use o comando: 
-```$ npm run start```.
+Para executar o servidor, use o comando:
+`$ npm run start`.
 
 ## Recursos
 
@@ -24,6 +24,7 @@ Para executar o servidor, use o comando:
 #### Rota de Informações de Veículos (GET)
 
 ##### Get todos os veículos
+
 Para receber informações iniciais dos veículos faça um requisição `GET` no endereço `http://localhost:3000/vehicles`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
 
 ```json
@@ -42,6 +43,7 @@ Para receber informações iniciais dos veículos faça um requisição `GET` no
 ```
 
 ##### Get por status
+
 Também é possível realizar o get por status do veículo. Para receber os veículos em status "stopped" faça um requisição `GET` no endereço `http://localhost:3000/vehicles/vehiclesByStatus/stopped`; para receber os veículos em status "moving" faça um requisição `GET` no endereço `http://localhost:3000/vehicles/vehiclesByStatus/moving`.
 
 #### Rota de Obtenção de Veículo Específico (GET)
@@ -88,6 +90,7 @@ O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no cor
 #### Rota de Atualização de Veículo (PUT ou PATCH)
 
 ##### Atualização completa dos dados(PUT)
+
 Para atualizar todas as informações de um veículo existente, faça uma requisição PUT no endereço `http://localhost:3000/vehicles/{id}` com o seguinte JSON no corpo da requisição, contendo os dados a serem modificados:
 
 ```json
@@ -102,6 +105,7 @@ Para atualizar todas as informações de um veículo existente, faça uma requis
 ```
 
 ##### Atualização parcial dos dados (PATCH)
+
 Para atualizar apenas um subconjunto das informações de um veículo existente, faça uma requisição PATCH no endereço `http://localhost:3000/vehicles/{id}` com um JSON no corpo da requisição com alguma das propriedades de veículo, contendo os dados a serem modificados, como exemplo, para alterar a propriedade `type`:
 
 ```json
@@ -111,6 +115,7 @@ Para atualizar apenas um subconjunto das informações de um veículo existente,
 ```
 
 ##### Retorno do endpoint
+
 O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta, com os dados do veículo atualizado:
 
 ```json
@@ -162,3 +167,142 @@ Os canais disponíveis para conexão no websocket de veículos são:
 - `vehicle-created`: canal de notificação de criações de veículos
 - `vehicle-updated`: canal de notificação de atualizações de veículos
 - `vehicle-deleted`: canal de notificações de deleção de veículos
+
+### Motoristas
+
+#### Rota de Informações de Motoristas (GET)
+
+##### Get todos os motoristas
+
+Para receber informações iniciais dos motoristas faça um requisição `GET` no endereço `http://localhost:3000/drivers`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+[
+  {
+    "id": number,
+    "name": string,
+    "cpf": string,
+    "cnh": string,
+    "status": string // "driving" ou "idle"
+  },
+  ...
+]
+```
+
+##### Get por status
+
+Também é possível realizar o get por status do motorista. Para receber os motoristas em status "driving" faça um requisição `GET` no endereço `http://localhost:3000/drivers/driversByStatus/driving`; para receber os motoristas em status "idle" faça um requisição `GET` no endereço `http://localhost:3000/drivers/driversByStatus/idle`.
+
+#### Rota de Obtenção de Motorista Específico (GET)
+
+Para obter informações de um motorista específico, faça uma requisição GET no endereço `http://localhost:3000/drivers/{id}`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+  {
+    "id": number,
+    "name": string,
+    "cpf": string,
+    "cnh": string,
+    "status": string // "driving" ou "idle"
+  }
+```
+
+#### Rota de Criação de Motorista (POST)
+
+Para criar um novo motorista, faça uma requisição POST no endereço `http://localhost:3000/drivers` com o seguinte JSON no corpo da requisição, contendo os dados do motorista a ser salvo:
+
+```json
+  {
+    "name": string,
+    "cpf": string,
+    "cnh": string,
+  }
+```
+
+O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no corpo da resposta, contendo as informações do novo motorista criado:
+
+```json
+  {
+    "id": number,
+    "name": string,
+    "cpf": string,
+    "cnh": string,
+    "status": string = "idle"
+  }
+```
+
+#### Rota de Atualização de Motorista (PUT ou PATCH)
+
+##### Atualização completa dos dados(PUT)
+
+Para atualizar todas as informações de um motorista existente, faça uma requisição PUT no endereço `http://localhost:3000/drivers/{id}` com o seguinte JSON no corpo da requisição, contendo os dados a serem modificados:
+
+```json
+  {
+    "name": string,
+    "cpf": string,
+    "cnh": string,
+    "status": string,
+  }
+```
+
+##### Atualização parcial dos dados (PATCH)
+
+Para atualizar apenas um subconjunto das informações de um motorista existente, faça uma requisição PATCH no endereço `http://localhost:3000/drivers/{id}` com um JSON no corpo da requisição com alguma das propriedades de motorista, contendo os dados a serem modificados, como exemplo, para alterar a propriedade `name`:
+
+```json
+  {
+    "name": string,
+  }
+```
+
+##### Retorno do endpoint
+
+O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta, com os dados do motorista atualizado:
+
+```json
+  {
+    "name": string,
+    "cpf": string,
+    "cnh": string,
+    "status": string,
+  }
+```
+
+#### Rota de Exclusão de Motorista (DELETE)
+
+Para excluir um motorista, faça uma requisição DELETE no endereço `http://localhost:3000/drivers/{id}`. O servidor deverá retornar uma resposta com status 204 (sem conteúdo), indicando que a operação foi realizada com sucesso.
+
+#### Motorista Não Encontrado
+
+Em todos os casos, se o motorista não for encontrado, o servidor deverá retornar uma resposta com status 404 e o seguinte JSON no corpo da resposta:
+
+```json
+{
+  "message": "Driver not found",
+  "error": "Not Found",
+  "statusCode": 404
+}
+```
+
+#### Websocket de motorista
+
+O websocket é atualizado com informações em tempo real de cada motorista. Para realizar a conexão utilize a biblioteca [Socket.IO](https://socket.io/docs/v4/client-api/) e utilize o endereço `http://localhost:3000/drivers/ws`. As mensagens enviadas possuem o seguinte formato de resposta:
+
+```json
+{
+  "data": {
+    "id": number,
+    "name": string,
+    "cpf": string,
+    "cnh": string,
+    "status": string,
+  }
+}
+```
+
+Os canais disponíveis para conexão no websocket de motoristas são:
+
+- `driver-created`: canal de notificação de criações de motoristas
+- `driver-updated`: canal de notificação de atualizações de motoristas
+- `driver-deleted`: canal de notificações de deleção de motoristas
