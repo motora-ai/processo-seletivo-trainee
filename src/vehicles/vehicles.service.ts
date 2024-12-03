@@ -59,13 +59,13 @@ export class VehicleService {
     return vehicle;
   }
 
-  patchVehicle(vehicleId: string, vehicle: any): any {
+  patchVehicle(vehicleId: number, vehicle: any): any {
     const index = this.vehicles.findIndex((v) => v.id == vehicleId);
     if (index === -1) {
       return null;
     }
     const updatedVehicle = { ...this.vehicles[index], ...vehicle };
-    updatedVehicle.id = parseInt(vehicleId);
+    updatedVehicle.id = vehicleId;
     this.vehicles[index] = updatedVehicle;
     return updatedVehicle;
   }

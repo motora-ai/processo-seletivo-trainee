@@ -13,7 +13,7 @@ import { DriversService } from './drivers.service';
 
 @Controller('drivers')
 export class DriversController {
-  constructor(private driversService: DriversService) {}
+  constructor(private driversService: DriversService) { }
 
   @Get('/')
   getDriver() {
@@ -60,7 +60,7 @@ export class DriversController {
 
   @Patch(':id')
   patchDriver(@Param('id') driverId: string, @Body() driver: any) {
-    const response = this.driversService.patchDriver(driverId, driver);
+    const response = this.driversService.patchDriver(parseInt(driverId), driver);
 
     if (!response) {
       throw new NotFoundException('Driver not found');

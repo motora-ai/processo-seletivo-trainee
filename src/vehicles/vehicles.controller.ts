@@ -63,7 +63,7 @@ export class VehicleController {
 
   @Patch(':id')
   patchVehicle(@Param('id') vehicleId: string, @Body() vehicle: any) {
-    const response = this.vehicleService.patchVehicle(vehicleId, vehicle);
+    const response = this.vehicleService.patchVehicle(parseInt(vehicleId), vehicle);
 
     if (!response) {
       throw new NotFoundException('Vehicle not found');

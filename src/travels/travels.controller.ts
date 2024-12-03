@@ -60,7 +60,7 @@ export class TravelsController {
 
   @Patch(':id')
   patchTravel(@Param('id') travelId: string, @Body() travel: any) {
-    const response = this.travelsService.patchTravel(travelId, travel);
+    const response = this.travelsService.patchTravel(parseInt(travelId), travel);
 
     if (!response) {
       throw new NotFoundException('Travel not found');

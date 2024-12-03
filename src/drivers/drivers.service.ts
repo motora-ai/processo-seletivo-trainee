@@ -65,13 +65,13 @@ export class DriversService {
     return driver;
   }
 
-  patchDriver(driverId: string, driver: any): any {
+  patchDriver(driverId: number, driver: any): any {
     const index = this.drivers.findIndex((v) => v.id == driverId);
     if (index === -1) {
       return null;
     }
     const updatedDriver = { ...this.drivers[index], ...driver };
-    updatedDriver.id = parseInt(driverId);
+    updatedDriver.id = driverId;
     this.drivers[index] = updatedDriver;
     return updatedDriver;
   }

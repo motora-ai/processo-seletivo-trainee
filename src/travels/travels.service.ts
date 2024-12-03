@@ -66,13 +66,13 @@ export class TravelsService {
     return travel;
   }
 
-  patchTravel(travelId: string, travel: any): any {
+  patchTravel(travelId: number, travel: any): any {
     const index = this.travels.findIndex((v) => v.id == travelId);
     if (index === -1) {
       return null;
     }
     const updatedTravel = { ...this.travels[index], ...travel };
-    updatedTravel.id = parseInt(travelId);
+    updatedTravel.id = travelId;
     this.travels[index] = updatedTravel;
     return updatedTravel;
   }
