@@ -11,10 +11,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { TravelsService } from './travels.service';
+import { TravelsGateway } from './travels.gateway';
 
 @Controller('travels')
 export class TravelsController {
-  constructor(private travelsService: TravelsService) { }
+  constructor(private travelsService: TravelsService, private travelsGateway: TravelsGateway) { }
 
   @Get('/')
   getTravel() {
@@ -34,7 +35,12 @@ export class TravelsController {
 
   @Post('/')
   postTravel(@Body() travel: any) {
-    return this.travelsService.postTravel(travel);
+    const response = this.travelsService.postTravel(travel);
+
+    this.travelsGateway.sendCreated(response);
+
+    return response;
+
   }
 
   @Put(':id')
@@ -44,6 +50,8 @@ export class TravelsController {
     if (!response) {
       throw new NotFoundException('Travel not found');
     }
+
+    this.travelsGateway.sendUpdated(response);
 
     return response;
   }
@@ -56,6 +64,8 @@ export class TravelsController {
       throw new NotFoundException('Travel not found');
     }
 
+    this.travelsGateway.sendDeleted(response);
+
     return response;
   }
 
@@ -66,6 +76,8 @@ export class TravelsController {
     if (!response) {
       throw new NotFoundException('Travel not found');
     }
+
+    this.travelsGateway.sendUpdated(response);
 
     return response;
   }
@@ -78,12 +90,16 @@ export class TravelsController {
       throw new BadRequestException('Some error happened');
     }
 
+    this.travelsGateway.sendCreated(response);
+
     return response;
   }
 
   @Post('/generateTravel')
   generateRandomTravel() {
     const response = this.travelsService.generateRandomTravel();
+
+    this.travelsGateway.sendCreated(response);
 
     return response;
   }
@@ -95,6 +111,8 @@ export class TravelsController {
     if (!response) {
       throw new NotFoundException('Travel not found');
     }
+
+    this.travelsGateway.sendUpdated(response);
 
     return response;
   }
