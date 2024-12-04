@@ -10,12 +10,29 @@ Um exemplo de cliente que se conecta aos WebSockets e recebe esses dados pode se
 
 Para começar a usar este projeto, clone o repositório e instale as dependências com o comando:
 
-`$ npm install`
+```bash
+$ npm install
+```
 
 ## Executando o servidor
 
 Para executar o servidor, use o comando:
-`$ npm run start`.
+
+```bash
+$ npm run start
+```
+
+## Executando o simulador
+
+Um simulador é disponibilizado junto a este projeto para criar, encerrar e atualizar viagens. Para rodá-lo, utilize o comando:
+
+```bash
+$ npm run simulate
+```
+
+## Testando as requisições com o Insomnia
+
+Na pasta [`resources`](resources), você pode encontrar uma coleção de requisições que podem ser importadas no Insomnia para testar as chamadas para este sistema. Elas estão dividas por entidade e documentam todos os recursos disponíveis para utilização.
 
 ## Recursos
 
@@ -331,7 +348,59 @@ Para receber informações iniciais das viagens faça um requisição `GET` no e
 
 ##### Get por status
 
-Também é possível realizar o get por status da viagem. Para receber as viagens com status "ongoing" faça um requisição `GET` no endereço `http://localhost:3000/travels/travelsByStatus/ongoing`; para receber as viagens com status "completed" faça um requisição `GET` no endereço `http://localhost:3000/travels/travelsByStatus/completed`.
+Também é possível realizar o get por status da viagem. Para receber as viagens com status "ongoing" faça um requisição `GET` no endereço `http://localhost:3000/travels/travelsByStatus/ongoing`; para receber as viagens com status "completed" faça um requisição `GET` no endereço `http://localhost:3000/travels/travelsByStatus/completed`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+[
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  },
+  ...
+]
+```
+
+##### Get por Veículo
+
+Também é possível realizar o get por veículo que realizou as viagens. Para receber as viagens de um veículo, faça uma requisição `GET` no endereço `http://localhost:3000/travels/travelsByVehicle/{vehicleId}`.
+O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+[
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  },
+  ...
+]
+```
+
+##### Get por Motorista
+
+Também é possível realizar o get por motorista que realizou as viagens. Para receber as viagens de um motorista, faça uma requisição `GET` no endereço `http://localhost:3000/travels/travelsByDriver/{driverId}`.
+O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+[
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  },
+  ...
+]
+```
 
 #### Rota de Obtenção de Viagem Específica (GET)
 
@@ -375,7 +444,12 @@ O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no cor
   }
 ```
 
+**Atenção** esta rota apenas cria uma entidade de viagem no banco, mas não atualiza o estado do motorista nem do veículo vinculados a ela. Para iniciar uma viagem veja o tópico ` Rota de inicialização de uma viagem
+`.
+
 #### Rota de Atualização de Viagem (PUT ou PATCH)
+
+As rotas de atualização de viagem apenas modificam a entidade viagem. Para encerrar uma viagem atualizando devidamente as entidades de motorista e veículos vinculadas, veja `Rota de encerramento de viagem`.
 
 ##### Atualização completa dos dados(PUT)
 
@@ -415,3 +489,66 @@ O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no cor
     "end": string,
   }
 ```
+
+### Rota de inicialização de uma viagem
+
+Para iniciar uma nova viagem, utilize o endpoint `http://localhost:3000/travels/beginTravel` com o seguinte JSON no corpo da requisição, contendo os dados da viagem a ser iniciada:
+
+```json
+{
+		"vehicleId": number,
+		"driverId": number
+}
+```
+
+Caso queira especificar um momento de inicio para a viagem, passe também a propriedade start. Caso não seja passada, a viagem será iniciada no momento que for processada pelo backend.
+
+O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no corpo da resposta, contendo as informações da nova viagem criada:
+
+```json
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "ongoing"
+    "start": string,
+  }
+```
+
+### Rota de finalização de uma viagem
+
+Para finalizar uma viagem, utilize o seguinte endpoint `http://localhost:3000/travels/stopTravel/{id}`. Não é necessário enviar um JSON no corpo da requisição. A viagem será encerrada no momento que a requisição for processada pelo backend.
+
+O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no corpo da resposta, contendo as informações da nova viagem criada:
+
+```json
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished"
+    "start": string,
+    "end": string,
+  }
+```
+
+#### Websocket de veículo
+
+O websocket é atualizado com informações em tempo real de cada veículo. Para realizar a conexão utilize a biblioteca [Socket.IO](https://socket.io/docs/v4/client-api/) e utilize o endereço `http://localhost:3000/travels/ws`. As mensagens enviadas possuem o seguinte formato de resposta:
+
+```json
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  }
+```
+
+Os canais disponíveis para conexão no websocket de veículos são:
+
+- `travel-created`: canal de notificação de criações de veículos
+- `travel-updated`: canal de notificação de atualizações de veículos
+- `travel-deleted`: canal de notificações de deleção de veículos
