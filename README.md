@@ -306,3 +306,112 @@ Os canais disponíveis para conexão no websocket de motoristas são:
 - `driver-created`: canal de notificação de criações de motoristas
 - `driver-updated`: canal de notificação de atualizações de motoristas
 - `driver-deleted`: canal de notificações de deleção de motoristas
+
+### Viagens
+
+#### Rota de Informações de Viagens (GET)
+
+##### Get todas as viagens
+
+Para receber informações iniciais das viagens faça um requisição `GET` no endereço `http://localhost:3000/travels`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+[
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  },
+  ...
+]
+```
+
+##### Get por status
+
+Também é possível realizar o get por status da viagem. Para receber as viagens com status "ongoing" faça um requisição `GET` no endereço `http://localhost:3000/travels/travelsByStatus/ongoing`; para receber as viagens com status "completed" faça um requisição `GET` no endereço `http://localhost:3000/travels/travelsByStatus/completed`.
+
+#### Rota de Obtenção de Viagem Específica (GET)
+
+Para obter informações de uma viagem específica, faça uma requisição GET no endereço `http://localhost:3000/travels/{id}`. O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta:
+
+```json
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  }
+```
+
+#### Rota de Criação de Viagem (POST)
+
+Para criar uma nova viagem, faça uma requisição POST no endereço `http://localhost:3000/travels` com o seguinte JSON no corpo da requisição, contendo os dados da viagem a ser salva:
+
+```json
+  {
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  }
+```
+
+O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no corpo da resposta, contendo as informações da nova viagem criada:
+
+```json
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  }
+```
+
+#### Rota de Atualização de Viagem (PUT ou PATCH)
+
+##### Atualização completa dos dados(PUT)
+
+Para atualizar todas as informações de uma viagem existente, faça uma requisição PUT no endereço `http://localhost:3000/travels/{id}` com o seguinte JSON no corpo da requisição, contendo os dados a serem modificados:
+
+```json
+  {
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  }
+```
+
+##### Atualização parcial dos dados (PATCH)
+
+Para atualizar apenas um subconjunto das informações de uma viagem existente, faça uma requisição PATCH no endereço `http://localhost:3000/travels/{id}` com um JSON no corpo da requisição com alguma das propriedades de viagem, contendo os dados a serem modificados, como exemplo, para alterar a propriedade `vehicleId`:
+
+```json
+  {
+    "vehicleId": number,
+  }
+```
+
+##### Retorno do endpoint
+
+O servidor deverá retornar uma resposta com status 200 e o seguinte JSON no corpo da resposta, com os dados da viagem atualizada:
+
+```json
+  {
+    "id": number,
+    "driverId": number,
+    "vehicleId": number,
+    "status": string, // "finished" ou "ongoing"
+    "start": string,
+    "end": string,
+  }
+```
