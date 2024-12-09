@@ -496,8 +496,8 @@ Para iniciar uma nova viagem, utilize o endpoint `http://localhost:3000/travels/
 
 ```json
 {
-		"vehicleId": number,
-		"driverId": number
+   "vehicleId": number,
+   "driverId": number
 }
 ```
 
