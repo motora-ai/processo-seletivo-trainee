@@ -532,9 +532,9 @@ O servidor deverá retornar uma resposta com status 201 e o seguinte JSON no cor
   }
 ```
 
-#### Websocket de veículo
+#### Websocket de viagem
 
-O websocket é atualizado com informações em tempo real de cada veículo. Para realizar a conexão utilize a biblioteca [Socket.IO](https://socket.io/docs/v4/client-api/) e utilize o endereço `http://localhost:3000/travels/ws`. As mensagens enviadas possuem o seguinte formato de resposta:
+O websocket é atualizado com informações em tempo real de cada viagem. Para realizar a conexão utilize a biblioteca [Socket.IO](https://socket.io/docs/v4/client-api/) e utilize o endereço `http://localhost:3000/travels/ws`. As mensagens enviadas possuem o seguinte formato de resposta:
 
 ```json
   {
@@ -547,8 +547,8 @@ O websocket é atualizado com informações em tempo real de cada veículo. Para
   }
 ```
 
-Os canais disponíveis para conexão no websocket de veículos são:
+Os canais disponíveis para conexão no websocket de viagens são:
 
-- `travel-created`: canal de notificação de criações de veículos
-- `travel-updated`: canal de notificação de atualizações de veículos
-- `travel-deleted`: canal de notificações de deleção de veículos
+- `travel-created`: canal de notificação de criações de viagem
+- `travel-updated`: canal de notificação de atualizações de viagem
+- `travel-deleted`: canal de notificações de deleção de viagem
