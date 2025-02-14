@@ -37,6 +37,8 @@ export class TravelsService {
     travel.start = travel.start || new Date();
     travel.status = travel.status || travel.end ? 'finished' : 'ongoing';
     travel.end = travel.end || undefined;
+    travel.startingLocation = travel.startingLocation || [0, 0];
+    travel.finalLocation = travel.finalLocation || [0, 0]
     this.travels.push(travel);
 
     this.travelsGateway.sendCreated(travel);

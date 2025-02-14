@@ -5,14 +5,18 @@
     "vehicleId": 1,
     "status": "finished",
     "start": "2021-01-01T00:00:00.000Z",
-    "end": "2021-01-01T00:00:00.000Z"
+    "end": "2021-01-01T00:00:00.000Z",
+    "startingLocation": [-20.3155, -40.3128],
+    "finalLocation": [-20.3222, -40.3456]
   },
   {
     "id": 2,
     "driverId": 2,
     "vehicleId": 2,
     "status": "ongoing",
-    "start": "2021-01-01T03:00:00.000Z"
+    "start": "2021-01-01T03:00:00.000Z",
+    "startingLocation": [-20.3206, -40.3377],
+    "finalLocation": [-20.3298, -40.3654]
   },
   {
     "id": 3,
@@ -20,6 +24,8 @@
     "vehicleId": 2,
     "status": "finished",
     "start": "2021-01-01T06:00:00.000Z",
-    "end": "2021-01-01T09:00:00.000Z"
+    "end": "2021-01-01T09:00:00.000Z",
+    "startingLocation": [-20.3083, -40.3164],
+    "finalLocation": [-20.3189, -40.3545]
   }
 ]
